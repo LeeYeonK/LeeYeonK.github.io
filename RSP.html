@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .icon{
+      width: 50px;
+      height: 50px;
+    }
+    .result{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container"> 
+  <div class="player">
+    <button class="Scissors" id="playerScissors" onclick="Scissors()">
+      <img class="icon" src="가위.png">
+    </button>
+    <button class="Rock" id="playerRock" onclick="Rock()">
+      <img class="icon" src="바위.png">
+    </button>
+    <button class="Paper" id="playerPaper" onclick="Paper()">
+      <img class="icon" src="보.png">
+    </button>
+  </div>
+  <div class="vs">
+    <img class="icon" src="vs.png">
+  </div>
+  <div class="COM">
+    <button class="Scissors" id="COMScissors">
+    <img class="icon" src="가위.png">
+  </button>
+  <button class="Rock" id="COMRock">
+    <img class="icon" src="바위.png">
+  </button>
+  <button class="Paper" id="COMPaper">
+    <img class="icon" src="보.png">
+  </button></div>
+</div> 
+<div class="result" id = "result">결과</div>
+</body>
+<script>
+  const $result = document.getElementById("result");
+  const $playerRock = document.getElementById("playerRock")
+  const $playerScissors = document.getElementById("playerScissors")
+  const $playerPaper = document.getElementById("playerPaper")
+  const $COMRock = document.getElementById("COMRock")
+  const $COMScissors = document.getElementById("COMScissors")
+  const $COMPaper = document.getElementById("COMPaper")
+  function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min; //최댓값은 제외, 최솟값은 포함
+    }
+  function Rock(){
+    Reset();
+    $playerRock.style.backgroundColor = 'red';
+    const randomInt = getRandomInt(1, 3);
+    if (randomInt === 1){
+      $COMScissors.style.backgroundColor = 'red';
+      $result.innerText = "결과 : 이김";
+    }
+    else if (randomInt === 2){
+      $COMRock.style.backgroundColor = 'red';
+      $result.innerText = "결과 : 비김";
+    }
+    else if (randomInt === 3){
+      $COMPaper.style.backgroundColor = 'red';
+      $result.innerText = "결과 : 짐";
+    }
+  }
+  function Scissors(){
+    Reset();
+    $playerScissors.style.backgroundColor = 'red';
+    const randomInt = getRandomInt(1, 3);
+    if (randomInt === 1){
+      $COMScissors.style.backgroundColor = 'red';
+      $result.innerText = "결과 : 비김";
+    }
+    else if (randomInt === 2){
+      $COMRock.style.backgroundColor = 'red';
+      $result.innerText = "결과 : 짐";
+    }
+    else if (randomInt === 3){
+      $COMPaper.style.backgroundColor = 'red';
+      $result.innerText = "결과 : 이김";
+    }
+  }
+  function Paper(){
+    Reset();
+    $playerPaper.style.backgroundColor = 'red';
+    const randomInt = getRandomInt(1, 3);
+    if (randomInt === 1){
+      $COMScissors.style.backgroundColor = 'red';
+      $result.innerText = "결과 : 짐";
+    }
+    else if (randomInt === 2){
+      $COMRock.style.backgroundColor = 'red';
+      $result.innerText = "결과 : 이김";
+    }
+    else if (randomInt === 3){
+      $COMPaper.style.backgroundColor = 'red';
+      $result.innerText = "결과 : 비김";
+    }
+  }
+  function Reset(){
+    $playerRock.style.backgroundColor='gray'
+    $playerScissors.style.backgroundColor='gray'
+    $playerPaper.style.backgroundColor='gray'
+    $COMRock.style.backgroundColor='gray'
+    $COMScissors.style.backgroundColor='gray'
+    $COMPaper.style.backgroundColor='gray'
+  } 
+</script>
+</html>
