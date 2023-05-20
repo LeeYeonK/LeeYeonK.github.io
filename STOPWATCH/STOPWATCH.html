@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      #stopwatch {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+        margin-right: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="button">
+        <button id="start">시작</button>
+        <button id="delay">5초 대기</button>
+      </div>
+      <div id="stopwatch">00 : 00</div>
+    </div>
+    <script>
+      let seconds = 0;
+      let minutes = 0;
+      let timer;
+      let timeoutId;
+
+      const $stopwatchDiv = document.getElementById("stopwatch");
+      const $startBtn = document.getElementById("start");
+      const $delayBtn = document.getElementById("delay");
+
+      $startBtn.addEventListener("click", startTimer);
+      $delayBtn.addEventListener("click", delay);
+      function startTimer() {
+        if ($startBtn.innerText === "시작") {
+          $startBtn.innerText = "정지";
+          timer = setInterval(incrementTime, 1000);
+          $startBtn.removeEventListener("click", startTimer);
+          $startBtn.addEventListener("click", stopTimer);
+        } else {
+          stopTimer();
+        }
+      }
+
+      function incrementTime() {
+        seconds++;
+        if (seconds === 60) {
+          seconds = 0;
+          minutes++;
+        }
+
+        const timeText = `${minutes < 10 ? "0" + minutes : minutes} : ${
+          seconds < 10 ? "0" + seconds : seconds
+        }`;
+        $stopwatchDiv.textContent = timeText;
+      }
+      function stopTimer() {
+        clearInterval(timer);
+        timer = null;
+        $startBtn.removeEventListener("click", stopTimer);
+        $startBtn.addEventListener("click", startTimer);
+        $startBtn.innerText = "시작";
+      }
+      function stop() {
+        clearInterval(timer);
+        timer = null;
+      }
+      async function delaywait() {
+        return new Promise((resolve, reject) => {
+          timeoutId = setTimeout(() => {
+            resolve(true);
+          }, 5000);
+        });
+      }
+
+      async function delay() {
+        stop();
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+
+        try {
+          await delaywait();
+          console.log("5초 대기 완료");
+          timer = setInterval(incrementTime, 1000);
+        } catch (error) {
+          console.log("대기 중 오류 발생");
+        }
+      }
+    </script>
+  </body>
+</html>
