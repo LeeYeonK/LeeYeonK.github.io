@@ -27,21 +27,26 @@
       <div id="button">
         <button id="start">시작</button>
         <button id="delay">5초 대기</button>
+        <button id="reset">리셋</button>
       </div>
       <div id="stopwatch">00 : 00</div>
     </div>
     <script>
       let seconds = 0;
       let minutes = 0;
+      let time = 0;
       let timer;
       let timeoutId;
 
       const $stopwatchDiv = document.getElementById("stopwatch");
       const $startBtn = document.getElementById("start");
       const $delayBtn = document.getElementById("delay");
+      const $resetBtn = document.getElementById("reset");
 
       $startBtn.addEventListener("click", startTimer);
       $delayBtn.addEventListener("click", delay);
+      $resetBtn.addEventListener("click", resetTimer);
+
       function startTimer() {
         if ($startBtn.innerText === "시작") {
           $startBtn.innerText = "정지";
@@ -97,6 +102,18 @@
         } catch (error) {
           console.log("대기 중 오류 발생");
         }
+      }
+
+      function resetTimer() {
+        clearInterval(timer);
+        timer = null;
+        seconds = 0;
+        minutes = 0;
+        time = 0;
+        $stopwatchDiv.textContent = "00 : 00";
+        $startBtn.innerText = "시작";
+        $startBtn.removeEventListener("click", stopTimer);
+        $startBtn.addEventListener("click", startTimer);
       }
     </script>
   </body>
